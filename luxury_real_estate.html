@@ -3,45 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>AURA | Luxury Real Estate</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Luxury Real Estate</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles can go here */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8fafc;
+            color: #374151;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>AURA Luxury Real Estate</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Properties</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
+    <header class="bg-blue-600 text-white p-4">
+        <h1 class="text-3xl">Luxury Real Estate Listings</h1>
     </header>
-    <main>
+    <main class="p-4">
         <section>
-            <h2>Welcome to AURA</h2>
-            <p>Your dream home awaits! Explore our exclusive listings and find the perfect property for your needs.</p>
-        </section>
-        <section>
-            <h2>Featured Properties</h2>
-            <div class="property-listing">
-                <article>
-                    <h3>Stunning Villa in Beverly Hills</h3>
-                    <p>Price: $3,500,000</p>
-                    <p>Description: A stunning villa with breathtaking views and luxurious amenities.</p>
-                </article>
-                <article>
-                    <h3>Modern Apartment in Manhattan</h3>
-                    <p>Price: $2,250,000</p>
-                    <p>Description: A modern apartment in the heart of the city, close to all attractions.</p>
-                </article>
+            <h2 class="text-2xl font-bold mb-4">Featured Properties</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <img src="property1.jpg" alt="Property 1" class="w-full">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg">Luxury Villa</h3>
+                        <p class="mb-2">Located in a prime area, this villa offers stunning views.</p>
+                        <p class="font-bold">$1,200,000</p>
+                    </div>
+                </div>
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <img src="property2.jpg" alt="Property 2" class="w-full">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg">Modern Apartment</h3>
+                        <p class="mb-2">Spacious apartment with modern amenities.</p>
+                        <p class="font-bold">$800,000</p>
+                    </div>
+                </div>
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <img src="property3.jpg" alt="Property 3" class="w-full">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg">Cozy Cottage</h3>
+                        <p class="mb-2">A perfect getaway in a tranquil setting.</p>
+                        <p class="font-bold">$450,000</p>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2026 AURA Luxury Real Estate. All rights reserved.</p>
+    <footer class="bg-blue-600 text-white p-4 text-center">
+        <p>&copy; 2026 Luxury Real Estate. All rights reserved.</p>
     </footer>
+    <script>
+        // Custom JavaScript can go here
+        console.log('Welcome to Luxury Real Estate!');
+    </script>
 </body>
 </html>
