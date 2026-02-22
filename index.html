@@ -3,34 +3,1116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxury Real Estate</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>AURA | Luxury Real Estate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+
+            --gold: #D4AF37;
+
+            --gold-light: #F4E8C1;
+
+            --dark: #0a0a0a;
+
+            --charcoal: #1a1a1a;
+
+        }
+
+        
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark);
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .font-serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 4px;
+        }
+        
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Gold gradient text */
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E8C1 50%, #D4AF37 100%);
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+        }
+        
+        /* Glass morphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Property card hover */
+        .property-card {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .property-card:hover {
+            transform: translateY(-10px);
+        }
+        .property-card img {
+            transition: transform 0.7s ease;
+        }
+        .property-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Navigation */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero parallax */
+        .hero-bg {
+            transform: scale(1.1);
+            animation: slowZoom 20s ease-in-out infinite alternate;
+        }
+        @keyframes slowZoom {
+            to { transform: scale(1.2); }
+        }
+        
+        /* Custom cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot {
+            width: 5px;
+            height: 5px;
+            background-color: var(--gold);
+        }
+        .cursor-outline {
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        .cursor-outline.hover {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold);
+        }
+        
+        /* Loader */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--dark);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-text {
+            font-size: 3rem;
+            letter-spacing: 0.5em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* Filter buttons */
+        .filter-btn.active {
+            background: var(--gold);
+            color: var(--dark);
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Image mask reveal */
+        .reveal-mask {
+            position: absolute;
+            inset: 0;
+            background: var(--dark);
+            transform: translateX(0);
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-mask.revealed {
+            transform: translateX(100%);
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <h1>Welcome to Luxury Real Estate</h1>
-    </header>
-    <main>
-        <section>
-            <h2>Featured Properties</h2>
-            <div class="property">
-                <img src="property1.jpg" alt="Property 1">
-                <h3>Stunning Oceanfront Villa</h3>
-                <p>Price: $5,000,000</p>
-                <p>Location: Malibu, CA</p>
-                <p>Description: Experience luxury living with breathtaking ocean views.</p>
+<body class="antialiased">
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="font-serif text-gold-gradient loader-text">AURA</div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+            <a href="#" class="font-serif text-2xl tracking-widest text-gold-gradient font-semibold">AURA</a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#properties" class="nav-link text-sm tracking-widest uppercase text-gray-300 hover:text-white transition-colors">Properties</a>
+                <a href="#about" class="nav-link text-sm tracking-widest uppercase text-gray-300 hover:text-white transition-colors">About</a>
+                <a href="#services" class="nav-link text-sm tracking-widest uppercase text-gray-300 hover:text-white transition-colors">Services</a>
+                <a href="#contact" class="nav-link text-sm tracking-widest uppercase text-gray-300 hover:text-white transition-colors">Contact</a>
             </div>
-            <div class="property">
-                <img src="property2.jpg" alt="Property 2">
-                <h3>Elegant City Penthouse</h3>
-                <p>Price: $3,500,000</p>
-                <p>Location: New York City, NY</p>
-                <p>Description: A sophisticated urban retreat with top-notch amenities.</p>
+
+            <button class="md:hidden text-white" onclick="toggleMenu()">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+
+            <a href="#contact" class="hidden md:block px-6 py-3 border border-[#D4AF37] text-[#D4AF37] text-xs tracking-widest uppercase hover:bg-[#D4AF37] hover:text-black transition-all duration-300">
+                Private Viewing
+            </a>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden fixed inset-0 bg-black/95 backdrop-blur-xl transform translate-x-full transition-transform duration-500" id="mobileMenu">
+            <div class="flex flex-col items-center justify-center h-full gap-8">
+                <button class="absolute top-6 right-6 text-white" onclick="toggleMenu()">
+                    <i data-lucide="x" class="w-8 h-8"></i>
+                </button>
+                <a href="#properties" class="font-serif text-3xl text-white" onclick="toggleMenu()">Properties</a>
+                <a href="#about" class="font-serif text-3xl text-white" onclick="toggleMenu()">About</a>
+                <a href="#services" class="font-serif text-3xl text-white" onclick="toggleMenu()">Services</a>
+                <a href="#contact" class="font-serif text-3xl text-white" onclick="toggleMenu()">Contact</a>
             </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 Luxury Real Estate. All rights reserved.</p>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen w-full overflow-hidden flex items-center justify-center">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80" 
+                 alt="Luxury Villa" 
+                 class="w-full h-full object-cover hero-bg opacity-60">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+            <p class="text-[#D4AF37] text-sm tracking-[0.3em] uppercase mb-6 fade-up">Exclusive Collection</p>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-white mb-6 leading-tight fade-up" style="transition-delay: 0.1s">
+                Beyond<br><span class="text-gold-gradient italic">Ordinary</span> Living
+            </h1>
+            <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light fade-up" style="transition-delay: 0.2s">
+                Curating the world's most exceptional properties for the most discerning clientele.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center fade-up" style="transition-delay: 0.3s">
+                <a href="#properties" class="px-8 py-4 bg-[#D4AF37] text-black text-sm tracking-widest uppercase font-medium hover:bg-[#F4E8C1] transition-all duration-300">
+                    Explore Collection
+                </a>
+                <a href="#contact" class="px-8 py-4 border border-white/30 text-white text-sm tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-300">
+                    Book Consultation
+                </a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-6 h-6 text-[#D4AF37]"></i>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-[#0a0a0a] border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center fade-up">
+                <div class="font-serif text-4xl md:text-5xl text-[#D4AF37] mb-2">$2.4B</div>
+                <div class="text-gray-400 text-xs tracking-widest uppercase">Sales Volume</div>
+            </div>
+            <div class="text-center fade-up" style="transition-delay: 0.1s">
+                <div class="font-serif text-4xl md:text-5xl text-[#D4AF37] mb-2">150+</div>
+                <div class="text-gray-400 text-xs tracking-widest uppercase">Properties</div>
+            </div>
+            <div class="text-center fade-up" style="transition-delay: 0.2s">
+                <div class="font-serif text-4xl md:text-5xl text-[#D4AF37] mb-2">12</div>
+                <div class="text-gray-400 text-xs tracking-widest uppercase">Countries</div>
+            </div>
+            <div class="text-center fade-up" style="transition-delay: 0.3s">
+                <div class="font-serif text-4xl md:text-5xl text-[#D4AF37] mb-2">98%</div>
+                <div class="text-gray-400 text-xs tracking-widest uppercase">Client Satisfaction</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Properties -->
+    <section id="properties" class="py-24 bg-[#0a0a0a]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 fade-up">
+                <div>
+                    <p class="text-[#D4AF37] text-sm tracking-[0.3em] uppercase mb-4">Portfolio</p>
+                    <h2 class="font-serif text-4xl md:text-5xl text-white">Featured Residences</h2>
+                </div>
+                
+                <!-- Filters -->
+                <div class="flex gap-4 mt-6 md:mt-0 overflow-x-auto pb-2 md:pb-0">
+                    <button class="filter-btn active px-6 py-2 border border-[#D4AF37] text-xs tracking-widest uppercase transition-all duration-300 whitespace-nowrap" onclick="filterProperties('all')">All</button>
+                    <button class="filter-btn px-6 py-2 border border-white/20 text-white/70 text-xs tracking-widest uppercase hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all duration-300 whitespace-nowrap" onclick="filterProperties('villa')">Villas</button>
+                    <button class="filter-btn px-6 py-2 border border-white/20 text-white/70 text-xs tracking-widest uppercase hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all duration-300 whitespace-nowrap" onclick="filterProperties('penthouse')">Penthouses</button>
+                    <button class="filter-btn px-6 py-2 border border-white/20 text-white/70 text-xs tracking-widest uppercase hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all duration-300 whitespace-nowrap" onclick="filterProperties('estate')">Estates</button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="propertiesGrid">
+                <!-- Property 1 -->
+                <div class="property-card group cursor-pointer fade-up" data-category="villa" onclick="openPropertyModal(0)">
+                    <div class="relative overflow-hidden aspect-[4/5] mb-6">
+                        <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80" 
+                             alt="Modern Villa" 
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-500"></div>
+                        <div class="absolute top-4 right-4 glass px-4 py-2">
+                            <span class="text-[#D4AF37] text-xs tracking-widest">FOR SALE</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <div class="flex gap-4 text-sm text-gray-300">
+                                <span class="flex items-center gap-1"><i data-lucide="bed" class="w-4 h-4"></i> 5</span>
+                                <span class="flex items-center gap-1"><i data-lucide="bath" class="w-4 h-4"></i> 7</span>
+                                <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-4 h-4"></i> 12,000 sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-2xl text-white mb-2 group-hover:text-[#D4AF37] transition-colors">Villa Serenity</h3>
+                    <p class="text-gray-400 text-sm mb-3">Beverly Hills, California</p>
+                    <p class="text-[#D4AF37] font-serif text-2xl">$24,500,000</p>
+                </div>
+
+                <!-- Property 2 -->
+                <div class="property-card group cursor-pointer fade-up" data-category="penthouse" onclick="openPropertyModal(1)" style="transition-delay: 0.1s">
+                    <div class="relative overflow-hidden aspect-[4/5] mb-6">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80" 
+                             alt="Luxury Penthouse" 
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-500"></div>
+                        <div class="absolute top-4 right-4 glass px-4 py-2">
+                            <span class="text-[#D4AF37] text-xs tracking-widest">FOR SALE</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <div class="flex gap-4 text-sm text-gray-300">
+                                <span class="flex items-center gap-1"><i data-lucide="bed" class="w-4 h-4"></i> 4</span>
+                                <span class="flex items-center gap-1"><i data-lucide="bath" class="w-4 h-4"></i> 5</span>
+                                <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-4 h-4"></i> 8,500 sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-2xl text-white mb-2 group-hover:text-[#D4AF37] transition-colors">The Sky Residence</h3>
+                    <p class="text-gray-400 text-sm mb-3">Manhattan, New York</p>
+                    <p class="text-[#D4AF37] font-serif text-2xl">$18,900,000</p>
+                </div>
+
+                <!-- Property 3 -->
+                <div class="property-card group cursor-pointer fade-up" data-category="estate" onclick="openPropertyModal(2)" style="transition-delay: 0.2s">
+                    <div class="relative overflow-hidden aspect-[4/5] mb-6">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" 
+                             alt="Waterfront Estate" 
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-500"></div>
+                        <div class="absolute top-4 right-4 glass px-4 py-2">
+                            <span class="text-[#D4AF37] text-xs tracking-widest">FOR SALE</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <div class="flex gap-4 text-sm text-gray-300">
+                                <span class="flex items-center gap-1"><i data-lucide="bed" class="w-4 h-4"></i> 8</span>
+                                <span class="flex items-center gap-1"><i data-lucide="bath" class="w-4 h-4"></i> 10</span>
+                                <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-4 h-4"></i> 25,000 sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-2xl text-white mb-2 group-hover:text-[#D4AF37] transition-colors">Oceanic Paradise</h3>
+                    <p class="text-gray-400 text-sm mb-3">Malibu, California</p>
+                    <p class="text-[#D4AF37] font-serif text-2xl">$45,000,000</p>
+                </div>
+
+                <!-- Property 4 -->
+                <div class="property-card group cursor-pointer fade-up" data-category="villa" onclick="openPropertyModal(3)" style="transition-delay: 0.3s">
+                    <div class="relative overflow-hidden aspect-[4/5] mb-6">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80" 
+                             alt="Modern Architecture" 
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-500"></div>
+                        <div class="absolute top-4 right-4 glass px-4 py-2">
+                            <span class="text-[#D4AF37] text-xs tracking-widest">FOR SALE</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <div class="flex gap-4 text-sm text-gray-300">
+                                <span class="flex items-center gap-1"><i data-lucide="bed" class="w-4 h-4"></i> 6</span>
+                                <span class="flex items-center gap-1"><i data-lucide="bath" class="w-4 h-4"></i> 8</span>
+                                <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-4 h-4"></i> 15,000 sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-2xl text-white mb-2 group-hover:text-[#D4AF37] transition-colors">Architect's Dream</h3>
+                    <p class="text-gray-400 text-sm mb-3">Miami Beach, Florida</p>
+                    <p class="text-[#D4AF37] font-serif text-2xl">$32,000,000</p>
+                </div>
+
+                <!-- Property 5 -->
+                <div class="property-card group cursor-pointer fade-up" data-category="penthouse" onclick="openPropertyModal(4)" style="transition-delay: 0.4s">
+                    <div class="relative overflow-hidden aspect-[4/5] mb-6">
+                        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80" 
+                             alt="City Penthouse" 
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-500"></div>
+                        <div class="absolute top-4 right-4 glass px-4 py-2">
+                            <span class="text-[#D4AF37] text-xs tracking-widest">FOR SALE</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <div class="flex gap-4 text-sm text-gray-300">
+                                <span class="flex items-center gap-1"><i data-lucide="bed" class="w-4 h-4"></i> 3</span>
+                                <span class="flex items-center gap-1"><i data-lucide="bath" class="w-4 h-4"></i> 4</span>
+                                <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-4 h-4"></i> 6,200 sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-2xl text-white mb-2 group-hover:text-[#D4AF37] transition-colors">Metropolitan Crown</h3>
+                    <p class="text-gray-400 text-sm mb-3">London, United Kingdom</p>
+                    <p class="text-[#D4AF37] font-serif text-2xl">£28,500,000</p>
+                </div>
+
+                <!-- Property 6 -->
+                <div class="property-card group cursor-pointer fade-up" data-category="estate" onclick="openPropertyModal(5)" style="transition-delay: 0.5s">
+                    <div class="relative overflow-hidden aspect-[4/5] mb-6">
+                        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80" 
+                             alt="Mountain Estate" 
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-500"></div>
+                        <div class="absolute top-4 right-4 glass px-4 py-2">
+                            <span class="text-[#D4AF37] text-xs tracking-widest">FOR SALE</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <div class="flex gap-4 text-sm text-gray-300">
+                                <span class="flex items-center gap-1"><i data-lucide="bed" class="w-4 h-4"></i> 7</span>
+                                <span class="flex items-center gap-1"><i data-lucide="bath" class="w-4 h-4"></i> 9</span>
+                                <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-4 h-4"></i> 20,000 sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-2xl text-white mb-2 group-hover:text-[#D4AF37] transition-colors">Alpine Sanctuary</h3>
+                    <p class="text-gray-400 text-sm mb-3">Aspen, Colorado</p>
+                    <p class="text-[#D4AF37] font-serif text-2xl">$38,000,000</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-16 fade-up">
+                <button class="px-10 py-4 border border-[#D4AF37] text-[#D4AF37] text-sm tracking-widest uppercase hover:bg-[#D4AF37] hover:text-black transition-all duration-300">
+                    View All Properties
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-[#0f0f0f] relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full opacity-20">
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&q=80" 
+                 alt="Interior" 
+                 class="w-full h-full object-cover">
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="fade-up">
+                    <p class="text-[#D4AF37] text-sm tracking-[0.3em] uppercase mb-6">Our Philosophy</p>
+                    <h2 class="font-serif text-4xl md:text-5xl text-white mb-8 leading-tight">
+                        Where Vision Meets <span class="text-gold-gradient italic">Excellence</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-6">
+                        For over two decades, AURA has represented the pinnacle of luxury real estate. We don't just sell properties; we curate lifestyles. Our portfolio features only the most extraordinary residences, each selected for its architectural significance, location prestige, and investment potential.
+                    </p>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                        Our team of seasoned advisors provides discreet, personalized service to ultra-high-net-worth individuals worldwide. We understand that luxury is not just about price—it's about rarity, craftsmanship, and the seamless integration of beauty and function.
+                    </p>
+                    
+                    <div class="flex items-center gap-4">
+                        <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-[#D4AF37]">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80" 
+                                 alt="CEO" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <div class="font-serif text-xl text-white">Alexander Sterling</div>
+                            <div class="text-[#D4AF37] text-sm">Founder & CEO</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6 fade-up" style="transition-delay: 0.2s">
+                    <div class="space-y-6 mt-12">
+                        <div class="glass p-8 text-center hover:border-[#D4AF37] transition-colors duration-300">
+                            <i data-lucide="award" class="w-10 h-10 text-[#D4AF37] mx-auto mb-4"></i>
+                            <h3 class="font-serif text-xl text-white mb-2">Award Winning</h3>
+                            <p class="text-gray-400 text-sm">Recognized globally for excellence in luxury real estate</p>
+                        </div>
+                        <div class="glass p-8 text-center hover:border-[#D4AF37] transition-colors duration-300">
+                            <i data-lucide="shield" class="w-10 h-10 text-[#D4AF37] mx-auto mb-4"></i>
+                            <h3 class="font-serif text-xl text-white mb-2">Discreet Service</h3>
+                            <p class="text-gray-400 text-sm">Utmost privacy and confidentiality for our clients</p>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="glass p-8 text-center hover:border-[#D4AF37] transition-colors duration-300">
+                            <i data-lucide="globe" class="w-10 h-10 text-[#D4AF37] mx-auto mb-4"></i>
+                            <h3 class="font-serif text-xl text-white mb-2">Global Network</h3>
+                            <p class="text-gray-400 text-sm">Access to exclusive off-market opportunities worldwide</p>
+                        </div>
+                        <div class="glass p-8 text-center hover:border-[#D4AF37] transition-colors duration-300">
+                            <i data-lucide="gem" class="w-10 h-10 text-[#D4AF37] mx-auto mb-4"></i>
+                            <h3 class="font-serif text-xl text-white mb-2">Curated Selection</h3>
+                            <p class="text-gray-400 text-sm">Only 5% of properties meet our rigorous standards</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-[#0a0a0a]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-up">
+                <p class="text-[#D4AF37] text-sm tracking-[0.3em] uppercase mb-4">Concierge</p>
+                <h2 class="font-serif text-4xl md:text-5xl text-white mb-6">White Glove Services</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Beyond property transactions, we offer comprehensive lifestyle management and investment advisory services.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="group relative overflow-hidden fade-up">
+                    <div class="aspect-[3/4] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800&q=80" 
+                             alt="Interior Design" 
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <i data-lucide="palette" class="w-10 h-10 text-[#D4AF37] mb-4"></i>
+                        <h3 class="font-serif text-2xl text-white mb-3">Interior Curation</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Access to world-renowned interior designers and bespoke furniture artisans to perfect your new residence.</p>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden fade-up" style="transition-delay: 0.1s">
+                    <div class="aspect-[3/4] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=800&q=80" 
+                             alt="Investment" 
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <i data-lucide="trending-up" class="w-10 h-10 text-[#D4AF37] mb-4"></i>
+                        <h3 class="font-serif text-2xl text-white mb-3">Investment Advisory</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Strategic portfolio management and market analysis for optimal real estate investment decisions.</p>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden fade-up" style="transition-delay: 0.2s">
+                    <div class="aspect-[3/4] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80" 
+                             alt="Concierge" 
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <i data-lucide="concierge-bell" class="w-10 h-10 text-[#D4AF37] mb-4"></i>
+                        <h3 class="font-serif text-2xl text-white mb-3">Lifestyle Management</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">From private aviation to exclusive events, we handle every aspect of your luxury lifestyle.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 bg-[#0f0f0f]">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <i data-lucide="quote" class="w-12 h-12 text-[#D4AF37] mx-auto mb-8 opacity-50"></i>
+            
+            <div class="relative overflow-hidden" id="testimonialSlider">
+                <div class="testimonial-slide transition-opacity duration-500" data-index="0">
+                    <p class="font-serif text-2xl md:text-4xl text-white leading-relaxed mb-8 italic">
+                        "AURA understood exactly what we were looking for when others couldn't. Their attention to detail and discretion made acquiring our dream home an absolute pleasure."
+                    </p>
+                    <div class="flex items-center justify-center gap-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" 
+                             alt="Client" 
+                             class="w-14 h-14 rounded-full object-cover border border-[#D4AF37]">
+                        <div class="text-left">
+                            <div class="text-white font-medium">James Worthington</div>
+                            <div class="text-[#D4AF37] text-sm">Tech Entrepreneur</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-2 mt-8">
+                <button class="w-3 h-3 rounded-full bg-[#D4AF37] transition-all" onclick="setTestimonial(0)"></button>
+                <button class="w-3 h-3 rounded-full bg-white/20 hover:bg-[#D4AF37] transition-all" onclick="setTestimonial(1)"></button>
+                <button class="w-3 h-3 rounded-full bg-white/20 hover:bg-[#D4AF37] transition-all" onclick="setTestimonial(2)"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-[#0a0a0a] relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16">
+                <div class="fade-up">
+                    <p class="text-[#D4AF37] text-sm tracking-[0.3em] uppercase mb-6">Get in Touch</p>
+                    <h2 class="font-serif text-4xl md:text-5xl text-white mb-8">Begin Your Journey</h2>
+                    <p class="text-gray-400 text-lg mb-12">
+                        Whether you're seeking your next residence or looking to list your property with us, our team is ready to provide an unparalleled real estate experience.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full border border-[#D4AF37]/30 flex items-center justify-center">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-[#D4AF37]"></i>
+                            </div>
+                            <div>
+                                <div class="text-white font-medium">Flagship Office</div>
+                                <div class="text-gray-400 text-sm">9876 Wilshire Boulevard, Beverly Hills, CA 90210</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full border border-[#D4AF37]/30 flex items-center justify-center">
+                                <i data-lucide="phone" class="w-5 h-5 text-[#D4AF37]"></i>
+                            </div>
+                            <div>
+                                <div class="text-white font-medium">Private Line</div>
+                                <div class="text-gray-400 text-sm">+1 (310) 555-0199</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full border border-[#D4AF37]/30 flex items-center justify-center">
+                                <i data-lucide="mail" class="w-5 h-5 text-[#D4AF37]"></i>
+                            </div>
+                            <div>
+                                <div class="text-white font-medium">Email</div>
+                                <div class="text-gray-400 text-sm">concierge@aurarealestate.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-8 md:p-12 fade-up" style="transition-delay: 0.2s">
+                    <form class="space-y-6" onsubmit="handleSubmit(event)">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs tracking-widest uppercase text-gray-400 mb-2">First Name</label>
+                                <input type="text" class="w-full bg-transparent border-b border-white/20 py-3 text-white focus:border-[#D4AF37] focus:outline-none transition-colors" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs tracking-widest uppercase text-gray-400 mb-2">Last Name</label>
+                                <input type="text" class="w-full bg-transparent border-b border-white/20 py-3 text-white focus:border-[#D4AF37] focus:outline-none transition-colors" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs tracking-widest uppercase text-gray-400 mb-2">Email</label>
+                            <input type="email" class="w-full bg-transparent border-b border-white/20 py-3 text-white focus:border-[#D4AF37] focus:outline-none transition-colors" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs tracking-widest uppercase text-gray-400 mb-2">Phone</label>
+                            <input type="tel" class="w-full bg-transparent border-b border-white/20 py-3 text-white focus:border-[#D4AF37] focus:outline-none transition-colors">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs tracking-widest uppercase text-gray-400 mb-2">Interest</label>
+                            <select class="w-full bg-transparent border-b border-white/20 py-3 text-white focus:border-[#D4AF37] focus:outline-none transition-colors appearance-none cursor-pointer">
+                                <option value="" class="bg-[#0a0a0a]">Select an option</option>
+                                <option value="buy" class="bg-[#0a0a0a]">Buying a Property</option>
+                                <option value="sell" class="bg-[#0a0a0a]">Selling a Property</option>
+                                <option value="rent" class="bg-[#0a0a0a]">Luxury Rentals</option>
+                                <option value="invest" class="bg-[#0a0a0a]">Investment Advisory</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs tracking-widest uppercase text-gray-400 mb-2">Message</label>
+                            <textarea rows="4" class="w-full bg-transparent border-b border-white/20 py-3 text-white focus:border-[#D4AF37] focus:outline-none transition-colors resize-none" placeholder="Tell us about your requirements..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-4 bg-[#D4AF37] text-black text-sm tracking-widest uppercase font-medium hover:bg-[#F4E8C1] transition-all duration-300 mt-4">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/5 py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <a href="#" class="font-serif text-3xl tracking-widest text-gold-gradient font-semibold mb-6 block">AURA</a>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Defining the standard for luxury real estate worldwide. Excellence in every detail.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium mb-6 text-sm tracking-widest uppercase">Properties</h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-[#D4AF37] transition-colors">Featured Listings</a></li>
+                        <li><a href="#" class="hover:text-[#D4AF37] transition-colors">New Developments</a></li>
+                        <li><a href="#" class="hover:text-[#D4AF37] transition-colors">Private Sales</a></li>
+                        <li><a href="#" class="hover:text-[#D4AF37] transition-colors">Rentals</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium mb-6 text-sm tracking-widest uppercase">Company</h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-[#D4AF37] transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-[#D4AF37] transition-colors">Our Team</a></li>
+                        <li><a href="#" class="hover:text-[#D4AF37] transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-[#D4AF37] transition-colors">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium mb-6 text-sm tracking-widest uppercase">Connect</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-xs">&copy; 2024 AURA Real Estate. All rights reserved.</p>
+                <div class="flex gap-6 text-gray-500 text-xs">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
     </footer>
+
+    <!-- Property Modal -->
+    <div id="propertyModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-xl" onclick="closePropertyModal()"></div>
+        <div class="absolute inset-4 md:inset-12 bg-[#0f0f0f] overflow-y-auto">
+            <button onclick="closePropertyModal()" class="absolute top-6 right-6 z-10 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#D4AF37] hover:text-black transition-all">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <div class="grid md:grid-cols-2 h-full">
+                <div class="relative h-64 md:h-full">
+                    <img id="modalImage" src="" alt="" class="w-full h-full object-cover">
+                    <div class="absolute bottom-6 left-6 right-6 flex gap-2 overflow-x-auto">
+                        <div class="w-20 h-20 border-2 border-[#D4AF37] cursor-pointer flex-shrink-0">
+                            <img src="" class="w-full h-full object-cover opacity-50">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-8 md:p-12 overflow-y-auto">
+                    <div class="mb-8">
+                        <p class="text-[#D4AF37] text-sm tracking-widest uppercase mb-2" id="modalLocation">Location</p>
+                        <h2 class="font-serif text-4xl text-white mb-4" id="modalTitle">Property Name</h2>
+                        <p class="text-[#D4AF37] font-serif text-3xl" id="modalPrice">$0</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-8 pb-8 border-b border-white/10">
+                        <div class="text-center p-4 glass">
+                            <i data-lucide="bed" class="w-6 h-6 text-[#D4AF37] mx-auto mb-2"></i>
+                            <div class="text-white text-lg" id="modalBeds">0</div>
+                            <div class="text-gray-400 text-xs uppercase tracking-wider">Beds</div>
+                        </div>
+                        <div class="text-center p-4 glass">
+                            <i data-lucide="bath" class="w-6 h-6 text-[#D4AF37] mx-auto mb-2"></i>
+                            <div class="text-white text-lg" id="modalBaths">0</div>
+                            <div class="text-gray-400 text-xs uppercase tracking-wider">Baths</div>
+                        </div>
+                        <div class="text-center p-4 glass">
+                            <i data-lucide="maximize" class="w-6 h-6 text-[#D4AF37] mx-auto mb-2"></i>
+                            <div class="text-white text-lg" id="modalSqft">0</div>
+                            <div class="text-gray-400 text-xs uppercase tracking-wider">Sq Ft</div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6 text-gray-300 leading-relaxed mb-8">
+                        <p id="modalDescription">Property description goes here.</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <h3 class="font-serif text-xl text-white mb-4">Features</h3>
+                        <ul class="grid grid-cols-2 gap-3 text-sm text-gray-400" id="modalFeatures">
+                            <!-- Features populated by JS -->
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-8 pt-8 border-t border-white/10 flex gap-4">
+                        <button class="flex-1 py-4 bg-[#D4AF37] text-black text-sm tracking-widest uppercase font-medium hover:bg-[#F4E8C1] transition-all">
+                            Schedule Viewing
+                        </button>
+                        <button class="flex-1 py-4 border border-white/30 text-white text-sm tracking-widest uppercase hover:bg-white hover:text-black transition-all">
+                            Download Brochure
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Property data
+        const properties = [
+            {
+                title: "Villa Serenity",
+                location: "Beverly Hills, California",
+                price: "$24,500,000",
+                beds: 5,
+                baths: 7,
+                sqft: "12,000",
+                image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&q=80",
+                description: "An architectural masterpiece nestled in the hills of Beverly Hills, Villa Serenity offers unparalleled privacy and panoramic views of Los Angeles. This contemporary estate features floor-to-ceiling glass walls, a infinity pool, and smart home technology throughout.",
+                features: ["Infinity Pool", "Smart Home System", "Wine Cellar", "Home Theater", "Guest House", "4-Car Garage"]
+            },
+            {
+                title: "The Sky Residence",
+                location: "Manhattan, New York",
+                price: "$18,900,000",
+                beds: 4,
+                baths: 5,
+                sqft: "8,500",
+                image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80",
+                description: "Perched atop one of Manhattan's most prestigious towers, this full-floor penthouse offers 360-degree views of Central Park and the skyline. Features include double-height ceilings, a private elevator, and bespoke Italian finishes.",
+                features: ["Central Park Views", "Private Elevator", "Chef's Kitchen", "Library", "Fitness Center", "Concierge"]
+            },
+            {
+                title: "Oceanic Paradise",
+                location: "Malibu, California",
+                price: "$45,000,000",
+                beds: 8,
+                baths: 10,
+                sqft: "25,000",
+                image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
+                description: "A beachfront compound spanning 2 acres with 200 feet of pristine coastline. This Mediterranean-inspired estate features multiple structures, including a main residence, guest villas, and a beach house, all with direct ocean access.",
+                features: ["Private Beach", "Tennis Court", "Multiple Structures", "Staff Quarters", "Spa & Wellness Center", "Helipad"]
+            },
+            {
+                title: "Architect's Dream",
+                location: "Miami Beach, Florida",
+                price: "$32,000,000",
+                beds: 6,
+                baths: 8,
+                sqft: "15,000",
+                image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80",
+                description: "A bold statement in modern architecture, this waterfront villa features dramatic cantilevers, glass walls, and seamless indoor-outdoor living. The property includes a private dock for yachts up to 100 feet.",
+                features: ["Waterfront Dock", "Rooftop Terrace", "Summer Kitchen", "Art Gallery Walls", "Floating Staircase", "Impact Windows"]
+            },
+            {
+                title: "Metropolitan Crown",
+                location: "London, United Kingdom",
+                price: "£28,500,000",
+                beds: 3,
+                baths: 4,
+                sqft: "6,200",
+                image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&q=80",
+                description: "Located in the heart of Mayfair, this penthouse represents the pinnacle of London luxury. Period details meet contemporary design, with access to a private garden square and 24-hour concierge service.",
+                features: ["Mayfair Location", "Period Features", "Private Garden Access", "Lift", "Staff Apartment", "Secure Parking"]
+            },
+            {
+                title: "Alpine Sanctuary",
+                location: "Aspen, Colorado",
+                price: "$38,000,000",
+                beds: 7,
+                baths: 9,
+                sqft: "20,000",
+                image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&q=80",
+                description: "A mountain retreat combining rustic elegance with modern luxury. Floor-to-ceiling windows frame views of Aspen Mountain, while the interior features reclaimed timber, stone fireplaces, and a world-class ski room.",
+                features: ["Ski-in/Ski-out", "Mountain Views", "Great Room", "Game Room", "Hot Tub", "Heated Driveway"]
+            }
+        ];
+
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // Custom cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Hover effect for cursor
+        const interactiveElements = document.querySelectorAll('a, button, .property-card');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up, .scale-in').forEach(el => observer.observe(el));
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-black/90', 'backdrop-blur-md');
+            } else {
+                navbar.classList.remove('bg-black/90', 'backdrop-blur-md');
+            }
+        });
+
+        // Mobile menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('translate-x-full');
+        }
+
+        // Property filtering
+        function filterProperties(category) {
+            const cards = document.querySelectorAll('.property-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(category) || (category === 'all' && btn.textContent === 'All')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    setTimeout(() => card.classList.add('visible'), 100);
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('visible');
+                }
+            });
+        }
+
+        // Property modal
+        function openPropertyModal(index) {
+            const property = properties[index];
+            const modal = document.getElementById('propertyModal');
+            
+            document.getElementById('modalImage').src = property.image;
+            document.getElementById('modalTitle').textContent = property.title;
+            document.getElementById('modalLocation').textContent = property.location;
+            document.getElementById('modalPrice').textContent = property.price;
+            document.getElementById('modalBeds').textContent = property.beds;
+            document.getElementById('modalBaths').textContent = property.baths;
+            document.getElementById('modalSqft').textContent = property.sqft;
+            document.getElementById('modalDescription').textContent = property.description;
+            
+            const featuresList = document.getElementById('modalFeatures');
+            featuresList.innerHTML = property.features.map(f => 
+                `<li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D4AF37]"></i> ${f}</li>`
+            ).join('');
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closePropertyModal() {
+            document.getElementById('propertyModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Testimonials
+        const testimonials = [
+            {
+                text: "AURA understood exactly what we were looking for when others couldn't. Their attention to detail and discretion made acquiring our dream home an absolute pleasure.",
+                name: "James Worthington",
+                role: "Tech Entrepreneur",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80"
+            },
+            {
+                text: "The team's knowledge of the ultra-luxury market is unmatched. They found us a property that wasn't even on the market, truly exclusive access.",
+                name: "Victoria Chen",
+                role: "Investment Banker",
+                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80"
+            },
+            {
+                text: "From the first consultation to closing, every interaction was marked by professionalism and genuine care. AURA sets the standard for luxury service.",
+                name: "Marcus Sterling",
+                role: "Private Equity",
+                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80"
+            }
+        ];
+
+        let currentTestimonial = 0;
+
+        function setTestimonial(index) {
+            currentTestimonial = index;
+            const t = testimonials[index];
+            const slider = document.getElementById('testimonialSlider');
+            
+            slider.innerHTML = `
+                <div class="testimonial-slide transition-opacity duration-500" data-index="${index}">
+                    <p class="font-serif text-2xl md:text-4xl text-white leading-relaxed mb-8 italic">
+                        "${t.text}"
+                    </p>
+                    <div class="flex items-center justify-center gap-4">
+                        <img src="${t.image}" alt="${t.name}" class="w-14 h-14 rounded-full object-cover border border-[#D4AF37]">
+                        <div class="text-left">
+                            <div class="text-white font-medium">${t.name}</div>
+                            <div class="text-[#D4AF37] text-sm">${t.role}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Update dots
+            const dots = document.querySelectorAll('[onclick^="setTestimonial"]');
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.remove('bg-white/20');
+                    dot.classList.add('bg-[#D4AF37]');
+                } else {
+                    dot.classList.add('bg-white/20');
+                    dot.classList.remove('bg-[#D4AF37]');
+                }
+            });
+        }
+
+        // Auto-rotate testimonials
+        setInterval(() => {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            setTestimonial(currentTestimonial);
+        }, 6000);
+
+        // Form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert('Thank you for your inquiry. Our concierge team will contact you within 24 hours.');
+            e.target.reset();
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
